@@ -1,3 +1,4 @@
+
 package springjdbc;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -12,12 +13,18 @@ public class Main {
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
         try {
+            // Retrieve Spring service bean
             BankTransferService service =
                     context.getBean(BankTransferService.class);
 
-            service.transferMoney(101, 102, 2000);
-
-            System.out.println("Transfer completed successfully!");
+            // Test transaction rollback
+            try {
+                service.transferMoney(101, 102, 2000);
+            } catch (RuntimeException e) {
+                System.out.println(
+                        "Transaction rolled back: " + e.getMessage()
+                );
+            }
 
         } finally {
             context.close();

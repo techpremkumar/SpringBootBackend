@@ -21,8 +21,9 @@ public class BankTransferService {
 
         System.out.println("Amount debited: " + amount);
 
-        accountRepository.credit(toId, amount);
+        // Simulate a failure
+        throw new RuntimeException("Payment failed!");
 
-        System.out.println("Amount credited: " + amount);
+        // Credit operation intentionally skipped
     }
 }
