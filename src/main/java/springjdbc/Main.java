@@ -1,3 +1,4 @@
+
 package springjdbc;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -13,16 +14,27 @@ public class Main {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        JdbcTemplate jdbcTemplate = context.getBean(JdbcTemplate.class);
+        try {
+            JdbcTemplate jdbcTemplate =
+                    context.getBean(JdbcTemplate.class);
 
-        ProductRepository repository = new ProductRepository(jdbcTemplate);
+            ProductRepository repository =
+                    new ProductRepository(jdbcTemplate);
 
-        Product product = repository.getProductById(1);
+            // SELECT
+            Product product = repository.getProductById(1);
 
-        System.out.println("Product ID: " + product.getId());
-        System.out.println("Product Name: " + product.getName());
-        System.out.println("Product Price: " + product.getPrice());
+            System.out.println("Product ID: " + product.getId());
+            System.out.println("Product Name: " + product.getName());
+            System.out.println("Product Price: " + product.getPrice());
 
-        context.close();
+            // DELETE
+            int rows = repository.deleteProduct(1);
+
+            System.out.println("Rows deleted: " + rows);
+
+        } finally {
+            context.close();
+        }
     }
 }
