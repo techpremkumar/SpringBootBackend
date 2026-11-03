@@ -1,11 +1,8 @@
-
 package springjdbc;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 import springjdbc.config.AppConfig;
-import springjdbc.model.Product;
-import springjdbc.repository.ProductRepository;
+import springjdbc.service.BankTransferService;
 
 public class Main {
 
@@ -15,23 +12,12 @@ public class Main {
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
         try {
-            JdbcTemplate jdbcTemplate =
-                    context.getBean(JdbcTemplate.class);
+            BankTransferService service =
+                    context.getBean(BankTransferService.class);
 
-            ProductRepository repository =
-                    new ProductRepository(jdbcTemplate);
+            service.transferMoney(101, 102, 2000);
 
-            // SELECT
-            Product product = repository.getProductById(1);
-
-            System.out.println("Product ID: " + product.getId());
-            System.out.println("Product Name: " + product.getName());
-            System.out.println("Product Price: " + product.getPrice());
-
-            // DELETE
-            int rows = repository.deleteProduct(1);
-
-            System.out.println("Rows deleted: " + rows);
+            System.out.println("Transfer completed successfully!");
 
         } finally {
             context.close();

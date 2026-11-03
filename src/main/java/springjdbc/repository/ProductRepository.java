@@ -35,9 +35,5 @@ public class ProductRepository {
         String sql = "UPDATE products SET price = ? WHERE id = ?";
         return jdbcTemplate.update(sql, newPrice, id);
     }
-    // DELETE
-    public int deleteProduct(int id) {
-        String sql = "DELETE FROM products WHERE id = ?";
-        return jdbcTemplate.update(sql, id);
-    }
+
 }
