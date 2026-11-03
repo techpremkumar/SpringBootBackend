@@ -1,7 +1,6 @@
 package springaop;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -9,7 +8,12 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
     @Before("execution(* springaop.PaymentService.makePayment(..))")
-    public void logBeforePayment() {
-        System.out.println("Logging: Payment method started");
+    public void beforePayment() {
+        System.out.println("Before: Payment started");
+    }
+
+    @After("execution(* springaop.PaymentService.makePayment(..))")
+    public void afterPayment() {
+        System.out.println("After: Payment method completed");
     }
 }
