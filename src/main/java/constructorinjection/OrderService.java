@@ -3,7 +3,7 @@ package constructorinjection;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OrderService 1{
+public class OrderService {
 
     private final OrderRepository orderRepository;
 
