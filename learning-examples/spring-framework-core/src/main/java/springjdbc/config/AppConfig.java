@@ -3,11 +3,11 @@ package springjdbc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -18,14 +18,23 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/spring_jdbc_db");
-        ds.setUsername("root");
-        ds.setPassword("NewPass@123");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl(System.getenv().getOrDefault(
+                "SPRING_JDBC_URL",
+                "jdbc:mysql://localhost:3306/spring_jdbc_db"
+        ));
+        dataSource.setUsername(System.getenv().getOrDefault(
+                "SPRING_JDBC_USERNAME",
+                "root"
+        ));
+        dataSource.setPassword(System.getenv().getOrDefault(
+                "SPRING_JDBC_PASSWORD",
+                ""
+        ));
 
-        return ds;
+        return dataSource;
     }
 
     @Bean
